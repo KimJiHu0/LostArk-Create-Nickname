@@ -4,7 +4,7 @@ import NickName from './Components/NickName';
 import { useState } from 'react';
 
 export default function Content({ onChangeNickNames }) {
-    // 검새 닉네임
+    // 검색할 닉네임
     const [nicknames, setNicknames] = useState([]);
 
     return (
