@@ -8,6 +8,8 @@ export default function Header({ onChangeApiKey, onChangeTheme }) {
     // Theme : 최상단에 선언한 State를 Context.Provider으로 내려줘서 사용.
     const theme = useContext(ThemeContext);
 
+    // API Key를 입력하지 않은 경우 : border-rose-500 클래스 추가
+
     return (
         <header
             className="flex items-center h-14 px-4 border-b border-gray-200 sm:h-16 md:px-6 dark:border-gray-800 shadow-xl"
