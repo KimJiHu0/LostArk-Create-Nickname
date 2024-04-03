@@ -2,12 +2,15 @@
 // axios 의 인스턴스를 생성
 import axios from 'axios';
 
-const API = axios.create({
-    BASE_URL: '',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    withCredentials: true,
-});
+const api = (apiKey, nickname) =>
+    axios
+        .create({
+            baseURL: `https://developer-lostark.game.onstove.com/characters`,
+            headers: {
+                accept: 'application/json',
+                authorization: `bearer ${apiKey}`,
+            },
+        })
+        .get(`/${nickname}/siblings`);
 
-export default API;
+export default api;

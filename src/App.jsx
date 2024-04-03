@@ -1,12 +1,18 @@
 import Header from './assets/components/Header/Header';
 import Content from './assets/components/Content/Content';
+// Component
 import Notice from './assets/components/Content/Components/Notice';
 import NickName from './assets/components/Content/Components/NickName';
 import Footer from './assets/components/Footer/Footer';
 
-import { ThemeContext } from './assets/js/ThemeContext';
+// Context
+import { ThemeContext } from './assets/js/context/ThemeContext';
 
-import { useState, useEffect } from 'react';
+// Reducer
+import { nickNameReducer } from './assets/js/reducers/nickNameReducer';
+
+// React
+import { useState, useEffect, useReducer } from 'react';
 
 export default function App() {
     // Header : API KEY
@@ -15,13 +21,14 @@ export default function App() {
     // TODO : 로컬스토리지에 값 가져와서 체크. 기본은 Dark
     const [theme, setTheme] = useState('light');
     // 검색할 닉네임
-    const [nicknames, setNicknames] = useState([]);
-
+    const [nickNameList, nickNameDispatch] = useReducer(nickNameReducer, []);
+    // id값
+    let index = 1;
     // 중복체크 함수
-    const duplicateCheck = (nicknames) => {
+    const duplicateCheck = (nicknamesText) => {
         return [
             ...new Set(
-                nicknames
+                nicknamesText
                     .replace(/\s{2,}/gi, ' ')
                     .trim()
                     .split(' '),
@@ -29,11 +36,28 @@ export default function App() {
         ];
     };
 
-    // 닉네임 변경 시 중복제거 -> 띄어쓰기는 한칸으로만 -> 띄어쓰기 기준으로 Split 후 기본 셋팅 후 담기
-    const onChangeNickNames = (nicknames) => {
-        setNicknames(
-            duplicateCheck(nicknames).map((el) => ({ available: false, searchComplete: false, nickName: el })),
-        );
+    // 검색할 닉네임 입력 시 : 닉네임 변경 시 중복제거 -> 띄어쓰기는 한칸으로만 -> 띄어쓰기 기준으로 Split 후 기본 셋팅 후 담기
+    const onChangeNickNames = (nicknamesText) => {
+        const dupNickNames = duplicateCheck(nicknamesText).map((el) => ({
+            available: false,
+            searchComplete: false,
+            nickName: el,
+            index: index++,
+        }));
+        nickNameDispatch({
+            type: 'change',
+            nickNameList: dupNickNames,
+        });
+    };
+
+    // 검색 버튼 클릭 후 결과를 받을 때
+    const onCompleteSearch = ({ index, available, searchComplete }) => {
+        nickNameDispatch({
+            type: 'searchComplete',
+            index,
+            available,
+            searchComplete,
+        });
     };
 
     // 테마 변경 Function
@@ -62,7 +86,12 @@ export default function App() {
                     <Header onChangeApiKey={setApiKey} onChangeTheme={changeTheme} />
                     <Content>
                         <Notice />
-                        <NickName apiKey={apiKey} nicknames={nicknames} onChangeNickNames={onChangeNickNames} />
+                        <NickName
+                            apiKey={apiKey}
+                            nickNameList={nickNameList}
+                            onChangeNickNames={onChangeNickNames}
+                            onCompleteSearch={onCompleteSearch}
+                        />
                     </Content>
                     <Footer />
                 </div>

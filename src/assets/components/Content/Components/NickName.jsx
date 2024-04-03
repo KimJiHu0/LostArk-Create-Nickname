@@ -4,12 +4,33 @@ import Loadding from '../../Loadding/Loadding';
 import api from '../../../js/api/api';
 import { useState } from 'react';
 
-export default function NickName({ apiKey, nicknames, onChangeNickNames }) {
+export default function NickName({ apiKey, nickNameList, onChangeNickNames, onCompleteSearch }) {
     // 검색중이라는 Loadding
     const [isShow, setIsShow] = useState(false);
 
     // 닉네임 검색 버튼 클릭
-    const onSearchButton = async () => {};
+    const onSearchButton = async () => {
+        // if (!apiKey) {
+        //     alert('API Key가 없습니다.');
+        //     return false;
+        // }
+        // 검색할 닉네임들 AXIOS 통신을 통해 검색
+        setIsShow(true);
+        nickNameList.forEach(async (searchObj) => {
+            await api(apiKey, searchObj.nickName)
+                .then((res) => {
+                    onCompleteSearch({
+                        index: searchObj.index,
+                        available: !res.data ? true : false,
+                        searchComplete: true,
+                    });
+                })
+                .catch((e) => {});
+        });
+        setIsShow(false);
+        // setTimeout(() => {
+        // }, 3000);
+    };
 
     return (
         <>
@@ -17,7 +38,7 @@ export default function NickName({ apiKey, nicknames, onChangeNickNames }) {
                 <div className="grid grid-cols-2 gap-4" data-id="32">
                     <div className="flex flex-col gap-2" data-id="33">
                         <label htmlFor="textarea1" className="block text-sm font-medium text-gray-900" data-id="34">
-                            검색할 닉네임 : {nicknames.length}개
+                            검색할 닉네임 : {nickNameList.length}개
                         </label>
                         <textarea
                             id="textarea1"
@@ -35,7 +56,7 @@ export default function NickName({ apiKey, nicknames, onChangeNickNames }) {
                     </div>
                     <div className="flex flex-col gap-2" data-id="36">
                         <label htmlFor="textarea2" className="block text-sm font-medium text-gray-900" data-id="37">
-                            사용 가능한 닉네임 : {nicknames.filter((el) => el.available).length} 개
+                            사용 가능한 닉네임 : {nickNameList.filter((el) => el.available).length} 개
                         </label>
                         <textarea
                             id="textarea2"
@@ -43,11 +64,15 @@ export default function NickName({ apiKey, nicknames, onChangeNickNames }) {
                             disabled
                             placeholder="사용 가능한 닉네임입니다."
                             data-id="38"
+                            value={nickNameList
+                                .filter((el) => el.available)
+                                .map((el) => el.nickName)
+                                .join(' ')}
                         />
                     </div>
                 </div>
             </div>
-            <Loadding show={isShow} />
+            <Loadding show={isShow} nickNameList={nickNameList} />
         </>
     );
 }

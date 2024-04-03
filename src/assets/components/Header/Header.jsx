@@ -1,4 +1,4 @@
-import { ThemeContext } from '../../js/ThemeContext';
+import { ThemeContext } from '../../js/context/ThemeContext';
 import { useContext } from 'react';
 
 import LightMode from './Components/Images/LightMode';

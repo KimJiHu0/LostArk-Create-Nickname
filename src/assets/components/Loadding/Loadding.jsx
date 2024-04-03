@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Loadding({ show }) {
+export default function Loadding({ show, nickNameList }) {
     if (!show) return null;
 
     return (
@@ -26,28 +26,10 @@ export default function Loadding({ show }) {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.004 8.004 0 014 12H0c0 4.418 3.582 8 8 8v-4zM20 12a8 8 0 01-8 8v4c4.418 0 8-3.582 8-8h-4zm-2-5.291C18.627 6.727 24 12.1 24 12h-4c0-4.418-3.582-8-8-8v4zM6.292 6.292a8 8 0 010 11.416l1.414-1.414a6 6 0 000-8.498l-1.414-1.414zM17.708 17.708a8 8 0 010-11.416l-1.414 1.414a6 6 0 000 8.498l1.414 1.414z"
                     ></path>
                 </svg>
-                <span className="text-white">(1 / 20)검색 중...</span>
+                <span className="text-white">
+                    ({nickNameList.filter((el) => el.searchComplete).length} / {nickNameList.length})검색 중...
+                </span>
             </div>
         </div>
     );
 }
-
-const App = () => {
-    const [loading, setLoading] = React.useState(false);
-
-    const toggleLoading = () => {
-        setLoading((prevLoading) => !prevLoading);
-    };
-
-    return (
-        <div className="min-h-screen bg-gray-200 flex justify-center items-center">
-            <button
-                onClick={toggleLoading}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none"
-            >
-                로딩 바 {loading ? '켜기' : '끄기'}
-            </button>
-            <LoadingBar show={loading} />
-        </div>
-    );
-};
