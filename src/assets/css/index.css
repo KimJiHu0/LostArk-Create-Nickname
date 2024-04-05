@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+/* body {
     @apply text-black dark:text-white dark:bg-slate-800;
-}
+} */
+
+/* * {
+    border: 1px solid black;
+} */
