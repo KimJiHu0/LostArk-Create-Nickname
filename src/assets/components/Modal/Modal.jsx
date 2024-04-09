@@ -16,7 +16,7 @@ const Modal = () => {
                     </button>
                 </div>
                 <div className="md:p-5 flex flex-col gap-10 overflow-x-scroll">
-                    <div className="flex flex-col gap-2 ">
+                    <div className="flex flex-col gap-2">
                         <div className="flex flex-col my-auto items-center">
                             <img src="/image/guide/Lostark_Homepage.png" className="w-4/5" />
                         </div>
@@ -34,67 +34,37 @@ const Modal = () => {
                             </span>
                         </div>
                         <div className="flex flex-col my-auto items-center">
-                            <img src="/image/guide/Lostark_Homepage.png" className="w-4/5" />
+                            <img src="/image/guide/Lostark_Login.png" className="w-4/5" />
                         </div>
                         <div className="bg-gray-300 rounded-lg flex flex-col my-auto md:p-2">
                             <span>
-                                <a
-                                    href="https://developer-lostark.game.onstove.com/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="cursor-pointer underline font-bold hover:text-blue-500"
-                                >
-                                    로스트아크 API 홈페이지
-                                </a>
-                                에 접속하여 로그인을 진행합니다.
+                                <strong>GET ACCESS TO LOSTARK API</strong>를 클릭합니다.
                             </span>
                         </div>
                         <div className="flex flex-col my-auto items-center">
-                            <img src="/image/guide/Lostark_Homepage.png" className="w-4/5" />
+                            <img src="/image/guide/Lostark_CreateClient.png" className="w-4/5" />
                         </div>
                         <div className="bg-gray-300 rounded-lg flex flex-col my-auto md:p-2">
                             <span>
-                                <a
-                                    href="https://developer-lostark.game.onstove.com/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="cursor-pointer underline font-bold hover:text-blue-500"
-                                >
-                                    로스트아크 API 홈페이지
-                                </a>
-                                에 접속하여 로그인을 진행합니다.
+                                <strong>CREATE A NEW CLIENT</strong>를 클릭합니다.
                             </span>
                         </div>
                         <div className="flex flex-col my-auto items-center">
-                            <img src="/image/guide/Lostark_Homepage.png" className="w-4/5" />
+                            <img src="/image/guide/Lostark_Client_Form.png" className="w-4/5" />
                         </div>
                         <div className="bg-gray-300 rounded-lg flex flex-col my-auto md:p-2">
                             <span>
-                                <a
-                                    href="https://developer-lostark.game.onstove.com/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="cursor-pointer underline font-bold hover:text-blue-500"
-                                >
-                                    로스트아크 API 홈페이지
-                                </a>
-                                에 접속하여 로그인을 진행합니다.
+                                생성할 CLIENT의 내용을 입력합니다. <strong>CLIENT NAME</strong>은 필수 사항입니다.
+                                입력을 다 했다면 CREATE를 클릭합니다.
                             </span>
                         </div>
                         <div className="flex flex-col my-auto items-center">
-                            <img src="/image/guide/Lostark_Homepage.png" className="w-4/5" />
+                            <img src="/image/guide/Lostark_Copy_APIKEY.png" className="w-4/5" />
                         </div>
                         <div className="bg-gray-300 rounded-lg flex flex-col my-auto md:p-2">
                             <span>
-                                <a
-                                    href="https://developer-lostark.game.onstove.com/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="cursor-pointer underline font-bold hover:text-blue-500"
-                                >
-                                    로스트아크 API 홈페이지
-                                </a>
-                                에 접속하여 로그인을 진행합니다.
+                                생성한 CLIENT에서 상단 API KEY가 생성되었습니다. 이제 이 API KEY를 COPY하여 닉네임 검색
+                                홈페이지 상단 API KEY 입력 칸에 붙여넣기 하면 됩니다.
                             </span>
                         </div>
                     </div>
