@@ -21,7 +21,7 @@ const Header = () => {
                     data-id="13"
                 >
                     {/* TODO: Dark / Light 모드에 따라 아이콘이 바뀌도록 src를 바꿔줘야한다. */}
-                    <img src="/image/DarkModeIcon.png" className="w-8 object-contain opacity-50" />
+                    <img src="/image/icon/DarkModeIcon.png" className="w-8 object-contain opacity-50" />
                 </button>
             </div>
         </header>

@@ -4,7 +4,7 @@ const Footer = () => {
             <div className="flex flex-row place-items-center pl-10 font-semibold text-black">
                 <div className="">에러 및 문의사항</div>
                 <div>
-                    <img src="/image/MailIcon.png" className="w-8 h-[24px] object-contain" />
+                    <img src="/image/icon/MailIcon.png" className="w-8 h-[24px] object-contain" />
                 </div>
                 <div>sh9732626@gmail.com</div>
             </div>

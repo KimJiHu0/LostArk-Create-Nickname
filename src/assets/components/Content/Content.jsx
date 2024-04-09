@@ -4,7 +4,7 @@ const Content = () => {
             <article>
                 <div className="flex bg-gray-100 mx-5 my-5 rounded-xl">
                     <div className="grid place-items-center pl-10">
-                        <img src="/image/NoticeIcon.png" className="w-8 object-contain opacity-50" />
+                        <img src="/image/icon/NoticeIcon.png" className="w-8 object-contain opacity-50" />
                     </div>
                     <div className="flex flex-row place-items-center p-5 gap-5 ">
                         <h1 className="text-xl font-bold">공지사항</h1>
@@ -21,7 +21,7 @@ const Content = () => {
                 <div className="flex flex-col bg-gray-100 mx-5 my-5 rounded-xl">
                     <div className="flex">
                         <div className="grid place-items-center pl-10">
-                            <img src="/image/GuideIcon.png" className="w-8 object-contain opacity-50" />
+                            <img src="/image/icon/GuideIcon.png" className="w-8 object-contain opacity-50" />
                         </div>
                         <div className="flex place-items-center p-5 gap-5 ">
                             <h1 className="text-xl font-bold">사용법</h1>
@@ -49,7 +49,7 @@ const Content = () => {
                 <div className="flex flex-col bg-gray-100 mx-5 my-5 rounded-xl">
                     <div className="flex">
                         <div className="grid place-items-center pl-10">
-                            <img src="/image/WarningIcon.png" className="w-8 object-contain opacity-50" />
+                            <img src="/image/icon/WarningIcon.png" className="w-8 object-contain opacity-50" />
                         </div>
                         <div className="flex place-items-center p-5 gap-5 ">
                             <h1 className="text-xl font-bold">주의사항</h1>
