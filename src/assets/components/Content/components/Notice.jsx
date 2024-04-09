@@ -1,4 +1,8 @@
+import { useContext } from 'react';
+import { rootContext } from '../../../js/context/rootContext';
+
 const Notice = () => {
+    const { isModal, setIsModal } = useContext(rootContext);
     return (
         <article>
             <div className="flex bg-gray-100 mx-5 my-5 rounded-xl">
@@ -9,7 +13,12 @@ const Notice = () => {
                     <h1 className="text-xl font-bold">공지사항</h1>
                     <p>
                         Stove API 발급하는 방법 ➡️{' '}
-                        <a className="items-center left-0 cursor-pointer underline font-bold hover:text-blue-400">
+                        <a
+                            onClick={() => {
+                                setIsModal(true);
+                            }}
+                            className="items-center left-0 cursor-pointer underline font-bold hover:text-blue-400"
+                        >
                             바로가기
                         </a>
                     </p>
