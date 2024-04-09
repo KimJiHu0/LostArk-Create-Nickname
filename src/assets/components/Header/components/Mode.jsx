@@ -3,7 +3,6 @@ import { rootContext } from '../../../js/context/rootContext';
 
 const Mode = () => {
     const { theme, setTheme } = useContext(rootContext);
-    console.log(theme);
     return (
         <div className="grid place-items-center">
             <button
