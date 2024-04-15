@@ -3,7 +3,6 @@ import { rootContext } from '../../../js/contexts/rootContext';
 
 const ApiInput = () => {
     const { apiKey, apiKeyDispatch } = useContext(rootContext);
-    console.log('ApiInput re-render');
     return (
         <div className="place-items-center flex flex-grow">
             <input
