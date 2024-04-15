@@ -1,8 +1,8 @@
 const Guide = () => {
     return (
         <article>
-            <div className="flex flex-col bg-gray-100 mx-5 my-5 rounded-xl">
-                <div className="flex">
+            <div className="flex flex-col mx-5 my-5 rounded-xl bg-gray-100 dark:bg-slate-900 dark:text-gray-300">
+                <div className="flex ">
                     <div className="grid place-items-center pl-10">
                         <img src="/image/icon/GuideIcon.png" className="w-8 object-contain opacity-50" />
                     </div>

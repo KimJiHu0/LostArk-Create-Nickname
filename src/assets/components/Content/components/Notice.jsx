@@ -1,11 +1,12 @@
-import { useContext } from 'react';
-import { rootContext } from '../../../js/context/rootContext';
+import Modal from '../../Modal/Modal';
+import { useState } from 'react';
 
 const Notice = () => {
-    const { isModal, setIsModal } = useContext(rootContext);
+    const [isModal, setIsModal] = useState(false);
+
     return (
         <article>
-            <div className="flex bg-gray-100 mx-5 my-5 rounded-xl">
+            <div className="flex mx-5 my-5 rounded-xl bg-gray-100 dark:bg-slate-900 text-black dark:text-gray-300">
                 <div className="grid place-items-center pl-10">
                     <img src="/image/icon/NoticeIcon.png" className="w-8 object-contain opacity-50" />
                 </div>
@@ -24,6 +25,7 @@ const Notice = () => {
                     </p>
                 </div>
             </div>
+            <Modal isModal={isModal} onCloseModal={() => setIsModal(false)} />
         </article>
     );
 };

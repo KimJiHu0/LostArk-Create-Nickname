@@ -1,9 +1,4 @@
-import { useContext } from 'react';
-import { rootContext } from '../../js/context/rootContext';
-
-const Modal = () => {
-    const { isModal, setIsModal } = useContext(rootContext);
-
+const Modal = ({ isModal, onCloseModal }) => {
     if (!isModal) {
         return null;
     }
@@ -12,6 +7,7 @@ const Modal = () => {
         // 모달 내부를 클릭해도 모달이 닫히지 않도록 이벤트 전파를 막습니다.
         e.stopPropagation();
     };
+
     return (
         <div
             className="fixed z-50 inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center"
@@ -20,7 +16,7 @@ const Modal = () => {
             <div className="flex flex-col bg-white rounded-lg md:w-4/5 md:h-4/5">
                 <div className="flex justify-between md:p-2 border-b border-gray-200 shadow-lg">
                     <span className="text-lg font-semibold md:pl-2">Stove API Key 발급 방법</span>
-                    <button onClick={() => setIsModal(false)}>
+                    <button onClick={onCloseModal}>
                         <img src="/image/icon/CloseIcon.png" className="p-2 w-8 object-contain opacity-50" />
                     </button>
                 </div>
@@ -80,10 +76,7 @@ const Modal = () => {
                 </div>
                 <div className="p-5">
                     <div className="flex justify-end">
-                        <button
-                            onClick={() => setIsModal(false)}
-                            className="border p-3 md:w-20 rounded-xl bg-stone-400 font-bold"
-                        >
+                        <button onClick={onCloseModal} className="border p-3 md:w-20 rounded-xl bg-stone-400 font-bold">
                             닫기
                         </button>
                     </div>

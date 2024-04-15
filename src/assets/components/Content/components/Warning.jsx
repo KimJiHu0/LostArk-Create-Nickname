@@ -1,7 +1,7 @@
 const Warning = () => {
     return (
         <article>
-            <div className="flex flex-col bg-gray-100 mx-5 my-5 rounded-xl">
+            <div className="flex flex-col mx-5 my-5 rounded-xl bg-gray-100 dark:bg-slate-900 text-black dark:text-gray-300">
                 <div className="flex">
                     <div className="grid place-items-center pl-10">
                         <img src="/image/icon/WarningIcon.png" className="w-8 object-contain opacity-50" />
