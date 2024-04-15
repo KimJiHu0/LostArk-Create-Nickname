@@ -1,8 +1,12 @@
-import { useContext } from 'react';
+import { useContext, useReducer } from 'react';
 import { rootContext } from '../../../js/contexts/rootContext';
+import { searchNickNameReducer } from '../../../js/reducers/reducer';
 
 const Search = () => {
-    const { apiKey, searchNickNames, searchNickNamesDispatch } = useContext(rootContext);
+    // apiKey Context
+    const { apiKey } = useContext(rootContext);
+    // 검색할 닉네임 Reducer
+    const [searchNickNames, searchNickNamesDispatch] = useReducer(searchNickNameReducer, []);
 
     // 검색할 닉네임 개수
     const srNicks = searchNickNames.length;
