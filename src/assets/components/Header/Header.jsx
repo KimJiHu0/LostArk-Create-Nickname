@@ -8,7 +8,7 @@ import { memo } from 'react';
 // memo로 해당 컴포넌트는 Re-render하지 않도록 설정
 const Header = memo(function Header() {
     return (
-        <header className="z-50 top-0 left-0 sticky w-screen md:h-[80px] shadow-xl flex flex-cols bg-gray-100 dark:bg-slate-700">
+        <header className="z-10 top-0 left-0 sticky w-screen md:h-[80px] shadow-xl flex flex-cols bg-gray-100 dark:bg-slate-700 z-">
             <Logo />
             <ApiInput />
             <Mode />

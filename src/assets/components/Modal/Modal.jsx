@@ -3,15 +3,10 @@ const Modal = ({ isModal, onCloseModal }) => {
         return null;
     }
 
-    const onBgClick = (e) => {
-        // 모달 내부를 클릭해도 모달이 닫히지 않도록 이벤트 전파를 막습니다.
-        e.stopPropagation();
-    };
-
     return (
         <div
             className="fixed z-50 inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center"
-            onClick={onBgClick}
+            onClick={onCloseModal}
         >
             <div className="flex flex-col bg-white dark:bg-slate-700 dark:border-black dark:text-gray-300 rounded-lg md:w-4/5 md:h-4/5">
                 <div className="flex justify-between md:p-2 border-b border-gray-200 dark:border-gray-600 shadow-lg">
