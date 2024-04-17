@@ -19,6 +19,7 @@ const Search = () => {
 
     // 검색도중 실패 시 재검색
     const searchRetry = (failObject) => {
+        console.log('failObject : ', failObject);
         // failObject = index, searchNickname
 
         const retryList = searchNickNames.filter((el) => el.index >= failObject.index);
@@ -50,7 +51,7 @@ const Search = () => {
                     });
             }
             setIsDisabled(false);
-        }, 62000);
+        }, Number(failObject.retryTime) * 1000);
     };
 
     // 닉네임 검색 함수
@@ -81,6 +82,7 @@ const Search = () => {
                     pass = false;
                     failObject.index = searchList[i].index;
                     failObject.failNickName = searchList[i].nickName;
+                    failObject.retryTime = e.response.headers['retry-after'];
                     searchRetry(failObject);
                 });
         }

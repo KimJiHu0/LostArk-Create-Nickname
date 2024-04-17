@@ -5,13 +5,12 @@ import axios from 'axios';
 const api = (apiKey, nickname) =>
     axios
         .create({
-            baseURL: `https://developer-lostark.game.onstove.com/characters`,
             headers: {
                 accept: 'application/json',
                 authorization: `bearer ${apiKey}`,
             },
         })
-        .get(`/${nickname}/siblings`);
+        .get(`/characters/${nickname}/siblings`);
 
 // const api = (apiKey) => {
 //     const axiosInstance = axios.create({
