@@ -12,11 +12,8 @@ const api = (apiKey, nickname) =>
             },
         })
         .get(`/${nickname}/siblings`);
-export default api;
 
-// import axios from 'axios';
-
-// const api = (apiKey, nickname) => {
+// const api = (apiKey) => {
 //     const axiosInstance = axios.create({
 //         baseURL: `https://developer-lostark.game.onstove.com/characters`,
 //         headers: {
@@ -25,31 +22,28 @@ export default api;
 //         },
 //     });
 
+//     // 성공 시
 //     const onFulfilled = (response) => response;
+//     // 재시도
 //     const retry = (errorConfig) => {
+//         console.log('@@@@@@@@@@@@@@@@@@@ re-try @@@@@@@@@@@@@@@@@@@');
 //         return new Promise((resolve) => {
-//             let status = false;
-
-//             const id = setTimeout(() => {
-//                 console.log('retry');
-//                 status = true;
-//                 resolve(axiosInstance.request(errorConfig));
-//             }, 10000);
-
-//             if (status) clearInterval(id);
+//             resolve(axiosInstance.request(errorConfig));
 //         });
 //     };
+//     // 실패 시
 //     const onRejected = (error) => {
 //         console.log('onReject : ', error);
 //         if (error.config) {
 //             return retry(error.config);
 //         }
-
-//         return Promise.reject(error);
+//         // return Promise.reject(error);
+//         return false;
 //     };
 
 //     axiosInstance.interceptors.response.use(onFulfilled, onRejected);
+
 //     return axiosInstance;
 // };
 
-// export default api;
+export default api;
