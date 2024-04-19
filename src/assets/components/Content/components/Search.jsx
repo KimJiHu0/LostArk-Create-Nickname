@@ -1,7 +1,7 @@
 import Alert from '../../Common/Alert';
 import Notification from '../../Common/Notification';
 
-import { useState, useContext, useReducer } from 'react';
+import { useState, useContext, useReducer, useEffect } from 'react';
 
 import { rootContext } from '../../../js/contexts/rootContext';
 import { searchNickNameReducer } from '../../../js/reducers/reducer';
@@ -12,59 +12,45 @@ const Search = () => {
     const { apiKey } = useContext(rootContext);
     // 검색할 닉네임 Reducer
     const [searchNickNames, searchNickNamesDispatch] = useReducer(searchNickNameReducer, []);
+    // Alert Message
+    const [alertMessage, setAlertMessage] = useState('');
     // Alert, Notification, textarea dsabled
     const [isAlert, setIsAlert] = useState(false);
     const [isNotification, setIsNotification] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
 
-    // 검색도중 실패 시 재검색
-    const searchRetry = (failObject) => {
-        console.log('failObject : ', failObject);
-        // failObject = index, searchNickname
-
-        const retryList = searchNickNames.filter((el) => el.index >= failObject.index);
-
-        setTimeout(async () => {
-            let pass = true;
-            // 이거 반복 돌건데
-            for (let i = 0; i < retryList.length; i++) {
-                // 실패 시 반복문 종료
-                if (!pass) return false;
-                // 아닐 땐 계속 검색 진행
-                await api(apiKey, retryList[i].nickName)
-                    .then((result) => {
-                        searchNickNamesDispatch({
-                            type: 'srNicks_search',
-                            nicks: {
-                                index: retryList[i].index,
-                                using: !result.data ? true : false,
-                                searchComplete: true,
-                            },
-                        });
-                    })
-                    .catch((e) => {
-                        // 에러 발생 시
-                        pass = false;
-                        failObject.index = retryList[i].index;
-                        failObject.failNickName = retryList[i].nickName;
-                        searchRetry(failObject);
-                    });
-            }
+    useEffect(() => {
+        if (searchNickNames.length === searchNickNames.filter((el) => el.searchComplete).length) {
             setIsDisabled(false);
-        }, Number(failObject.retryTime) * 1000);
-    };
+            const id = setTimeout(() => {
+                setIsNotification(false);
+                setIsAlert(false);
+            }, 10000);
+            return () => clearInterval(id);
+        }
+    }, [searchNickNames]);
 
-    // 닉네임 검색 함수
-    const searchNickName = async (searchList) => {
-        // searchObject : [{index, search nickName}, ...]
-
+    const searchApi = async (searchList) => {
         let pass = true;
-        let failObject = {};
+        let status;
+        let statusText;
 
-        // 이거 반복 돌건데
+        // 우측 상단 Notification Show
+        setIsNotification(true);
+        // text area, button disabled
+        setIsDisabled(true);
+
+        // 검색할 닉네임만큼
         for (let i = 0; i < searchList.length; i++) {
             // 실패 시 반복문 종료
-            if (!pass) return false;
+            if (!pass) {
+                setIsAlert(true);
+                if (status !== 429) {
+                    setIsNotification(false);
+                    setIsDisabled(false);
+                }
+                return false;
+            }
             // 아닐 땐 계속 검색 진행
             await api(apiKey, searchList[i].nickName)
                 .then((result) => {
@@ -78,17 +64,46 @@ const Search = () => {
                     });
                 })
                 .catch((e) => {
-                    // 에러 발생 시
+                    // pass를 false로 변경하여 Loop 종료
                     pass = false;
-                    failObject.index = searchList[i].index;
-                    failObject.failNickName = searchList[i].nickName;
-                    failObject.retryTime = e.response.headers['retry-after'];
-                    searchRetry(failObject);
+                    // 에러 Code, Message
+                    status = e.response.status;
+                    statusText = e.response.statusText;
+
+                    setIsAlert(true);
+                    if (status === 400) {
+                        setAlertMessage(
+                            `[${status} ${statusText}] Api Key 혹은 검색할 닉네임을 제대로 입력했는지 확인 후 같은 에러가 반복된다면 관리자에게 문의 바랍니다.`,
+                        );
+                    } else if (status === 401) {
+                        setAlertMessage(`[${status} ${statusText}] Api Key가 올바르지 않습니다.`);
+                    } else if (status === 404) {
+                        setAlertMessage(
+                            `[${status} ${statusText}] 요청한 URL이 올바르지 않습니다. 관리자에게 문의 바랍니다.`,
+                        );
+                    } else if (status === 429) {
+                        setAlertMessage(
+                            `[${status} ${statusText}] 1분당 검색 가능한 횟수를 소진하였습니다. 잠시만 기다려주시면 재검색을 시도합니다.`,
+                        );
+                        // 닉네임 검색 실패한 index, NickName, retry time
+                        let failIndex = searchList[i].index;
+                        let retryTime = Number(e.response.headers['retry-after']);
+                        const retryList = searchNickNames.filter((el) => el.index >= failIndex);
+                        setTimeout(async () => {
+                            await searchApi(retryList);
+                        }, retryTime * 1000);
+                    } else {
+                        setAlertMessage(
+                            `[${status} ${statusText}] 닉네임 검색 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.`,
+                        );
+                    }
                 });
         }
-        setIsDisabled(false);
+    };
 
-        return failObject;
+    // 닉네임 검색 함수
+    const searchNickName = async (searchList) => {
+        await searchApi(searchList);
     };
 
     // 버튼 클릭 시
@@ -96,20 +111,12 @@ const Search = () => {
         // API Key 혹은 닉네임을 검색하지 않았을 때 검색 중지
         if (!apiKey || searchNickNames.length === 0) {
             setIsAlert(true);
+            setAlertMessage('API Key 혹은 검색할 닉네임은 필수로 입력하셔야 합니다.');
             return false;
         }
 
-        // 우측 상단 Notification Show
-        setIsNotification(true);
-        // text area, button disabled
-        setIsDisabled(true);
-
-        // 검색할 닉네임을 Loop 돌며 API 통신
-
-        // 검색할 닉네임을 변경하지 않고 검색을 바로누를 경우, searchComplete Reset
-        searchNickNamesDispatch({
-            type: 'srNicks_reset',
-        });
+        // 검색할 닉네임을 변경하지 않고 검색을 바로누를 경우를 대비하여 searchComplete의 value를 false로 Reset
+        searchNickNamesDispatch({ type: 'srNicks_reset' });
 
         // 검색
         searchNickName(searchNickNames);
@@ -152,7 +159,7 @@ const Search = () => {
 
     return (
         <main>
-            {isAlert ? <Alert onAlertClose={() => setIsAlert(false)} /> : null}
+            {isAlert ? <Alert alertMessage={alertMessage} onAlertClose={() => setIsAlert(false)} /> : null}
             {isNotification ? <Notification srNicks={searchNickNames} /> : null}
             <div className="grid grid-cols-2">
                 <div className="flex flex-col gap-3 p-5">

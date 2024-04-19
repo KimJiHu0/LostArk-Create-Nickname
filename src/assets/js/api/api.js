@@ -36,8 +36,7 @@ const api = (apiKey, nickname) =>
 //         if (error.config) {
 //             return retry(error.config);
 //         }
-//         // return Promise.reject(error);
-//         return false;
+//         return Promise.reject(error);
 //     };
 
 //     axiosInstance.interceptors.response.use(onFulfilled, onRejected);
