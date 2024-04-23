@@ -7,17 +7,18 @@ import api from '../../../ts/api/api';
 
 interface SearchProps {
     apiKey: string;
+    inputDisabled: boolean;
     setIsAlert: (flag: boolean) => void;
     setAlertMessage: (message: string) => void;
-    isDisabled: boolean;
-    setIsDisabled: (flag: boolean) => void;
 }
 
-const Search = ({ apiKey, setIsAlert, setAlertMessage, isDisabled, setIsDisabled }: SearchProps) => {
+const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchProps) => {
     // 검색할 닉네임 Reducer
     const [searchNickNames, searchNickNamesDispatch] = useReducer(searchNickNameReducer, []);
     // 검색중 Notification
     const [isNotification, setIsNotification] = useState<boolean>(false);
+    // textarea, search button disabled
+    const [isDisabled, setIsDisabled] = useState(false);
 
     useEffect(() => {
         if (searchNickNames.length === searchNickNames.filter((el) => el.searchComplete).length) {
@@ -106,13 +107,25 @@ const Search = ({ apiKey, setIsAlert, setAlertMessage, isDisabled, setIsDisabled
         await searchApi(searchList);
     };
 
+    const showAlert = (isShow: boolean, message: string) => {
+        setIsAlert(isShow);
+        setAlertMessage(message);
+    };
+
     // 버튼 클릭 시
     const onSearchButton = async () => {
         // API Key 혹은 닉네임을 검색하지 않았을 때 검색 중지
-        if (!apiKey || searchNickNames.length === 0) {
-            setIsAlert(true);
-            setAlertMessage('API Key 혹은 검색할 닉네임은 필수로 입력하셔야 합니다.');
+        if (!apiKey) {
+            showAlert(true, 'API Key를 입력해주세요.');
             return false;
+        } else if (!inputDisabled) {
+            showAlert(true, 'API Key를 적용 해주세요.');
+            return false;
+        } else if (searchNickNames.length === 0) {
+            showAlert(true, '검색할 닉네임을 입력해주세요.');
+            return false;
+        } else {
+            showAlert(false, '');
         }
 
         // 검색할 닉네임을 변경하지 않고 검색을 바로누를 경우를 대비하여 searchComplete의 value를 false로 Reset
