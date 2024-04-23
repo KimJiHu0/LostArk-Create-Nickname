@@ -1,4 +1,14 @@
-const Notification = ({ srNicks }) => {
+interface searchNickNameType {
+    index: number;
+    using: boolean;
+    searchComplete: boolean;
+    nickName: string;
+}
+interface NotificationProps {
+    srNicks: searchNickNameType[] | [];
+}
+
+const Notification = ({ srNicks }: NotificationProps) => {
     const searchingNicks = srNicks.length;
     const searchCompleteNicks = srNicks.filter((el) => el.searchComplete).length;
     const status = searchCompleteNicks === searchingNicks ? true : false;

@@ -1,4 +1,8 @@
-const Modal = ({ isModal, onCloseModal }) => {
+interface ModalProps {
+    isModal: boolean;
+    onCloseModal: () => void;
+}
+const Modal = ({ isModal, onCloseModal }: ModalProps) => {
     if (!isModal) {
         return null;
     }

@@ -1,23 +1,23 @@
-import Alert from '../../Common/Alert';
 import Notification from '../../Common/Notification';
 
-import { useState, useContext, useReducer, useEffect } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 
-import { rootContext } from '../../../js/contexts/rootContext';
-import { searchNickNameReducer } from '../../../js/reducers/reducer';
-import api from '../../../js/api/api';
+import { searchNickNameReducer } from '../../../ts/reducer/reducer';
+import api from '../../../ts/api/api';
 
-const Search = () => {
-    // apiKey Context
-    const { apiKey } = useContext(rootContext);
+interface SearchProps {
+    apiKey: string;
+    setIsAlert: (flag: boolean) => void;
+    setAlertMessage: (message: string) => void;
+    isDisabled: boolean;
+    setIsDisabled: (flag: boolean) => void;
+}
+
+const Search = ({ apiKey, setIsAlert, setAlertMessage, isDisabled, setIsDisabled }: SearchProps) => {
     // 검색할 닉네임 Reducer
     const [searchNickNames, searchNickNamesDispatch] = useReducer(searchNickNameReducer, []);
-    // Alert Message
-    const [alertMessage, setAlertMessage] = useState('');
-    // Alert, Notification, textarea dsabled
-    const [isAlert, setIsAlert] = useState(false);
-    const [isNotification, setIsNotification] = useState(false);
-    const [isDisabled, setIsDisabled] = useState(false);
+    // 검색중 Notification
+    const [isNotification, setIsNotification] = useState<boolean>(false);
 
     useEffect(() => {
         if (searchNickNames.length === searchNickNames.filter((el) => el.searchComplete).length) {
@@ -86,8 +86,8 @@ const Search = () => {
                             `[${status} ${statusText}] 1분당 검색 가능한 횟수를 소진하였습니다. 잠시만 기다려주시면 재검색을 시도합니다.`,
                         );
                         // 닉네임 검색 실패한 index, NickName, retry time
-                        let failIndex = searchList[i].index;
-                        let retryTime = Number(e.response.headers['retry-after']);
+                        let failIndex: number = searchList[i].index;
+                        let retryTime: number = Number(e.response.headers['retry-after']);
                         const retryList = searchNickNames.filter((el) => el.index >= failIndex);
                         setTimeout(async () => {
                             await searchApi(retryList);
@@ -123,7 +123,7 @@ const Search = () => {
     };
 
     // 중복체크 함수
-    const duplicateCheck = (nicknamesText) => {
+    const duplicateCheck = (nicknamesText: string) => {
         return [
             ...new Set(
                 nicknamesText
@@ -142,7 +142,7 @@ const Search = () => {
         // // 중복체크 후 검색 닉네임 List
         const srAbleNicks =
             e.target.value !== ''
-                ? duplicateCheck(e.target.value).map((el, index) => ({
+                ? duplicateCheck(e.target.value).map((el: string, index: number) => ({
                       index: index,
                       using: false,
                       searchComplete: false,
@@ -159,7 +159,6 @@ const Search = () => {
 
     return (
         <main>
-            {isAlert ? <Alert alertMessage={alertMessage} onAlertClose={() => setIsAlert(false)} /> : null}
             {isNotification ? <Notification srNicks={searchNickNames} /> : null}
             <div className="grid grid-cols-2">
                 <div className="flex flex-col gap-3 p-5">

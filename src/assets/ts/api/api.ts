@@ -2,7 +2,7 @@
 // axios 의 인스턴스를 생성
 import axios from 'axios';
 
-const api = (apiKey, nickname) =>
+const api = (apiKey: string, nickname: string) =>
     axios
         .create({
             headers: {

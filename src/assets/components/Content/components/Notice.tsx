@@ -1,9 +1,7 @@
-import Modal from '../../Modal/Modal';
-import { useState } from 'react';
-
-const Notice = () => {
-    const [isModal, setIsModal] = useState(false);
-
+interface NoticeProps {
+    onClickModal: () => void;
+}
+const Notice = ({ onClickModal }: NoticeProps) => {
     return (
         <article>
             <div className="flex mx-5 my-5 rounded-xl bg-gray-100 dark:bg-slate-900 text-black dark:text-gray-300">
@@ -15,9 +13,7 @@ const Notice = () => {
                     <p>
                         Stove API 발급하는 방법 ➡️{' '}
                         <a
-                            onClick={() => {
-                                setIsModal(true);
-                            }}
+                            onClick={onClickModal}
                             className="items-center left-0 cursor-pointer underline font-bold hover:text-blue-400"
                         >
                             바로가기
@@ -25,7 +21,6 @@ const Notice = () => {
                     </p>
                 </div>
             </div>
-            <Modal isModal={isModal} onCloseModal={() => setIsModal(false)} />
         </article>
     );
 };

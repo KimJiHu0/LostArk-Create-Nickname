@@ -1,8 +1,9 @@
-import { useContext } from 'react';
-import { rootContext } from '../../../js/contexts/rootContext';
+interface ApiInputProps {
+    apiKey: string;
+    onChangeApiKey: (apiKey: string) => void;
+}
 
-const ApiInput = () => {
-    const { apiKey, apiKeyDispatch } = useContext(rootContext);
+const ApiInput = ({ apiKey, onChangeApiKey }: ApiInputProps) => {
     return (
         <div className="place-items-center flex flex-grow">
             <input
@@ -12,7 +13,7 @@ const ApiInput = () => {
                 data-id="11"
                 type="search"
                 onChange={(e) => {
-                    apiKeyDispatch({ type: 'apikey_input', apiKey: e.target.value });
+                    onChangeApiKey(e.target.value);
                 }}
             />
         </div>

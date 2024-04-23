@@ -1,7 +1,30 @@
-# LostArk Create NickName
+# React + TypeScript + Vite
 
-> 인게임에서 닉네임을 하나씩 쳐본 후 되는 닉네임을 사용하는 것은 굉장히 불편했다. 오래 걸릴 뿐만 아니라 "이 닉네임을 사용하시겠습니까?" 라는 문구를 띄워주지 않는 경우 바로 생성이 되어버린 경우도 흔하다.
-> 이러한 일들 때문에 미리 닉네임을 검색하고 마음에 드는 사용 가능한 닉네임을 만드는 것이 어떨까라는 생각이 들어서 시작하게 되었다.
-> 자세한 사항은 아래 노션에 작성해 두었다.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-https://www.notion.so/kimjihu-history/Lostark-Create-Nickname-261601093e1644da86a7d76a649e6909
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+
+- Configure the top-level `parserOptions` property like this:
+
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
+```
+
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
