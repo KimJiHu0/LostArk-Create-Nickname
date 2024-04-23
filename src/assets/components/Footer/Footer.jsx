@@ -1,4 +1,6 @@
-const Footer = () => {
+import { memo } from 'react';
+
+const Footer = memo(function Footer() {
     return (
         <footer className="fixed flex bottom-0 left-0 md:h-[80px] w-screen border-gray-300 bg-gray-100 dark:bg-slate-700">
             <div className="flex flex-row place-items-center pl-10 font-semibold text-black">
@@ -11,6 +13,6 @@ const Footer = () => {
             {/* <p className="flex items-center text-sm font-semibold">에러 및 문의사항 : sh9732626@gmail.com</p> */}
         </footer>
     );
-};
+});
 
 export default Footer;
