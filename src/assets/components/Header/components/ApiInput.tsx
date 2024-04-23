@@ -1,9 +1,10 @@
 interface ApiInputProps {
     apiKey: string;
     onChangeApiKey: (apiKey: string) => void;
+    inputDisabled: boolean;
 }
 
-const ApiInput = ({ apiKey, onChangeApiKey }: ApiInputProps) => {
+const ApiInput = ({ apiKey, onChangeApiKey, inputDisabled }: ApiInputProps) => {
     return (
         <div className="place-items-center flex flex-grow">
             <input
@@ -15,6 +16,7 @@ const ApiInput = ({ apiKey, onChangeApiKey }: ApiInputProps) => {
                 onChange={(e) => {
                     onChangeApiKey(e.target.value);
                 }}
+                disabled={inputDisabled}
             />
         </div>
     );
