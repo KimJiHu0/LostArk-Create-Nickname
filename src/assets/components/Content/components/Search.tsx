@@ -27,14 +27,10 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
     // textarea, search button disabled
     const [isDisabled, setIsDisabled] = useState(false);
 
+    // 검색 완료될 때
     useEffect(() => {
         if (searchNickNames.length === searchNickNames.filter((el) => el.searchComplete).length) {
             setIsDisabled(false);
-            const id = setTimeout(() => {
-                setIsNotification(false);
-                setIsAlert(false);
-            }, 10000);
-            return () => clearInterval(id);
         }
     }, [searchNickNames]);
 
@@ -188,7 +184,9 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
 
     return (
         <main>
-            {isNotification ? <Notification srNicks={searchNickNames} /> : null}
+            {isNotification ? (
+                <Notification srNicks={searchNickNames} onCloseNotification={() => setIsNotification(false)} />
+            ) : null}
             <div className="grid grid-cols-2">
                 <div className="flex flex-col gap-3 p-5">
                     <label htmlFor="textarea1" className="block text-sm font-medium text-gray-900 dark:text-white">

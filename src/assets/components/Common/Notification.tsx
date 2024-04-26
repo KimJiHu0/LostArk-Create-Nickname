@@ -6,9 +6,10 @@ interface searchNickNameType {
 }
 interface NotificationProps {
     srNicks: searchNickNameType[] | [];
+    onCloseNotification: () => void;
 }
 
-const Notification = ({ srNicks }: NotificationProps) => {
+const Notification = ({ srNicks, onCloseNotification }: NotificationProps) => {
     const searchingNicks = srNicks.length;
     const searchCompleteNicks = srNicks.filter((el) => el.searchComplete).length;
     const status = searchCompleteNicks === searchingNicks ? true : false;
@@ -48,6 +49,9 @@ const Notification = ({ srNicks }: NotificationProps) => {
                             </span>
                         </>
                     )}
+                    <button onClick={onCloseNotification}>
+                        <img src="/image/icon/CloseIcon.png" className="p-2 w-8 object-contain opacity-50" />
+                    </button>
                 </div>
             </div>
         </div>
