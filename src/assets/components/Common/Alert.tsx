@@ -2,6 +2,7 @@ interface AlertProps {
     alertMessage: string;
     onAlertClose: () => void;
 }
+
 const Alert = ({ alertMessage, onAlertClose }: AlertProps) => {
     return (
         <div className="fixed z-50 flex items-center justify-center">
