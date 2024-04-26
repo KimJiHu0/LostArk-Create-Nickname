@@ -38,10 +38,35 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
         }
     }, [searchNickNames]);
 
+    const errorMessageSet = (status: number, statusText: string) => {
+        setIsAlert(true);
+
+        let message: string = `[${status} : ${statusText}]`;
+
+        switch (status) {
+            case 400:
+                message +=
+                    'Api Key 혹은 검색할 닉네임을 제대로 입력했는지 확인 후 같은 에러가 반복된다면 관리자에게 문의 바랍니다.';
+                break;
+            case 401:
+                message += 'Api Key가 올바르지 않습니다.';
+                break;
+            case 404:
+                message += '요청한 URL이 올바르지 않습니다. 관리자에게 문의 바랍니다.';
+                break;
+            case 429:
+                message += '1분당 검색 가능한 횟수를 소진하였습니다. 잠시만 기다려주시면 재검색을 시도합니다.';
+                break;
+            default:
+                message += '닉네임 검색 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.';
+        }
+        setAlertMessage(message);
+    };
+
     const searchApi = async (searchList: SearchNickName[]) => {
         let pass = true;
-        let status;
-        let statusText;
+        let status: number;
+        let statusText: string;
 
         // 우측 상단 Notification Show
         setIsNotification(true);
@@ -78,32 +103,18 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
                     status = e.response.status;
                     statusText = e.response.statusText;
 
-                    setIsAlert(true);
-                    if (status === 400) {
-                        setAlertMessage(
-                            `[${status} ${statusText}] Api Key 혹은 검색할 닉네임을 제대로 입력했는지 확인 후 같은 에러가 반복된다면 관리자에게 문의 바랍니다.`,
-                        );
-                    } else if (status === 401) {
-                        setAlertMessage(`[${status} ${statusText}] Api Key가 올바르지 않습니다.`);
-                    } else if (status === 404) {
-                        setAlertMessage(
-                            `[${status} ${statusText}] 요청한 URL이 올바르지 않습니다. 관리자에게 문의 바랍니다.`,
-                        );
-                    } else if (status === 429) {
-                        setAlertMessage(
-                            `[${status} ${statusText}] 1분당 검색 가능한 횟수를 소진하였습니다. 잠시만 기다려주시면 재검색을 시도합니다.`,
-                        );
+                    // 에러 Alert 띄우기
+                    errorMessageSet(status, statusText);
+
+                    // 429일 때에는 retryTime만큼 쉬었다가 재검색
+                    if (status === 429) {
                         // 닉네임 검색 실패한 index, NickName, retry time
                         let failIndex: number = searchList[i].index;
                         let retryTime: number = Number(e.response.headers['retry-after']);
-                        const retryList = searchNickNames.filter((el) => el.index >= failIndex);
+                        const retryList = searchNickNames.filter((el: SearchNickName) => el.index >= failIndex);
                         setTimeout(async () => {
                             await searchApi(retryList);
                         }, retryTime * 1000);
-                    } else {
-                        setAlertMessage(
-                            `[${status} ${statusText}] 닉네임 검색 중 에러가 발생했습니다. 관리자에게 문의 바랍니다.`,
-                        );
                     }
                 });
         }
@@ -133,13 +144,11 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
             return false;
         } else {
             showAlert(false, '');
+            // 검색할 닉네임을 변경하지 않고 검색을 바로누를 경우를 대비하여 searchComplete의 value를 false로 Reset
+            searchNickNamesDispatch({ type: 'srNicks_reset' });
+            // 검색
+            searchNickName(searchNickNames);
         }
-
-        // 검색할 닉네임을 변경하지 않고 검색을 바로누를 경우를 대비하여 searchComplete의 value를 false로 Reset
-        searchNickNamesDispatch({ type: 'srNicks_reset' });
-
-        // 검색
-        searchNickName(searchNickNames);
     };
 
     // 중복체크 함수
