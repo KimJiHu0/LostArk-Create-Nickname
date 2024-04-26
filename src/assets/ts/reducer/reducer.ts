@@ -1,5 +1,18 @@
+interface SearchNickNameMap {
+    index: number;
+    using: boolean;
+    searchComplete: boolean;
+    nickName: string;
+}
+
+interface ActionType {
+    type: string;
+    nickNameList?: SearchNickNameMap[] | [];
+    nicks?: SearchNickNameMap | {};
+}
+
 // 검색할 닉네임 Reducer
-export function searchNickNameReducer(state, action) {
+export function searchNickNameReducer(state: SearchNickNameMap[], action: ActionType) {
     switch (action.type) {
         case 'srNicks_change':
             return [...action.nickNameList];

@@ -12,6 +12,13 @@ interface SearchProps {
     setAlertMessage: (message: string) => void;
 }
 
+interface SearchNickName {
+    index: number;
+    using: boolean;
+    searchComplete: boolean;
+    nickName: string;
+}
+
 const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchProps) => {
     // 검색할 닉네임 Reducer
     const [searchNickNames, searchNickNamesDispatch] = useReducer(searchNickNameReducer, []);
@@ -31,7 +38,7 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
         }
     }, [searchNickNames]);
 
-    const searchApi = async (searchList) => {
+    const searchApi = async (searchList: SearchNickName[]) => {
         let pass = true;
         let status;
         let statusText;
@@ -103,7 +110,7 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
     };
 
     // 닉네임 검색 함수
-    const searchNickName = async (searchList) => {
+    const searchNickName = async (searchList: SearchNickName[]) => {
         await searchApi(searchList);
     };
 
