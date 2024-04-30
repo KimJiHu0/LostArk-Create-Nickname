@@ -9,7 +9,11 @@ export default {
     // content: ['./src/**/*.{js,ts,jsx,tsx}'],
     // content: ['./src/assets/components/*.{js,jsx,ts,tsx}'],
     theme: {
-        extend: {},
+        extend: {
+            boxShadow: {
+                r: '3px 0px 5px -2px',
+            },
+        },
     },
     plugins: [],
 };
