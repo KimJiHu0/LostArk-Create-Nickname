@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './assets/css/index.css';
 
+import { BrowserRouter } from 'react-router-dom';
+
 /*
   해당 파이은 ReactDOM.render를 수행
   PWA를 위한 서비스 워커 등록 작업 수행
@@ -10,6 +12,8 @@ import './assets/css/index.css';
 */
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </React.StrictMode>,
 );
