@@ -2,7 +2,7 @@ interface ContentCardProps {
     imageType: string;
     title: string;
     listType?: string;
-    list?: Array<string>;
+    list?: Array<string> | [];
     onClickModal?: () => void;
 }
 
@@ -16,7 +16,7 @@ const ContentCard = ({ imageType, title, listType, list, onClickModal }: Content
                     </div>
                     <div className="flex flex-row place-items-center p-5 gap-5 ">
                         <h1 className="text-xl font-bold">{title}</h1>
-                        {imageType === 'Notice' ? (
+                        {/* {imageType === 'Notice' ? (
                             <p>
                                 Stove API 발급하는 방법 ➡️{' '}
                                 <a
@@ -26,18 +26,18 @@ const ContentCard = ({ imageType, title, listType, list, onClickModal }: Content
                                     바로가기
                                 </a>
                             </p>
-                        ) : null}
+                        ) : null} */}
                     </div>
                 </div>
-                {imageType !== 'Notice' ? (
-                    <div className="flex flex-row pl-20 pb-5">
-                        <ol className={'list-inside' + listType === 'number' ? 'list-decimal' : 'list-disc'}>
-                            {list.map((content, index) => (
-                                <li key={index}>{content}</li>
-                            ))}
-                        </ol>
-                    </div>
-                ) : null}
+                {/* {imageType !== 'Notice' ? ( */}
+                <div className="flex flex-row pl-20 pb-5">
+                    <ol className={'list-inside' + listType === 'number' ? 'list-decimal' : 'list-disc'}>
+                        {list.map((content, index) => (
+                            <li key={index}>{content}</li>
+                        ))}
+                    </ol>
+                </div>
+                {/* ) : null} */}
             </div>
         </article>
     );
