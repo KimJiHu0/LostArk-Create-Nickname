@@ -1,9 +1,12 @@
 // Component
 import Header from './assets/components/Header/Header';
+import MenuIcon from './assets/components/Header/components/MenuIcon';
 import Logo from './assets/components/Header/components/Logo';
 import ApiInput from './assets/components/Header/components/ApiInput';
 import Submit from './assets/components/Header/components/Submit';
 import Mode from './assets/components/Header/components/Mode';
+
+import Sidebar from './assets/components/SideBar/SideBar';
 
 import Content from './assets/components/Content/Content';
 import Notice from './assets/components/Content/components/Notice';
@@ -32,6 +35,8 @@ export default function App() {
     const [inputDisabled, setInputDisabled] = useState<boolean>(false);
     // theme
     const [theme, setTheme] = useState<string>('');
+    // sidebar
+    const [isSide, setIsSide] = useState<boolean>(false);
 
     function changeTheme(propTheme: string) {
         if (propTheme === 'dark') document.querySelector('html')!.classList.add('dark');
@@ -75,11 +80,13 @@ export default function App() {
     return (
         <div className="container">
             <Header>
+                <MenuIcon onToggleIsSide={() => setIsSide(true)} />
                 <Logo />
                 <ApiInput apiKey={apiKey} onChangeApiKey={setApiKey} inputDisabled={inputDisabled} />
                 <Submit inputDisabled={inputDisabled} onClickSubmit={onSubmitClick} />
                 <Mode theme={theme} onClickMode={onClickMode} />
             </Header>
+            <Sidebar isSide={isSide} onToggleIsSide={() => setIsSide(false)} />
             <Content>
                 <Notice onClickModal={() => setIsModal(true)} />
                 <Guide />
