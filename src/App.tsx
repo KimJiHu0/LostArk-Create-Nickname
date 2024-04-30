@@ -22,6 +22,9 @@ import Modal from './assets/components/Modal/Modal';
 // React
 import { useState, useEffect } from 'react';
 
+// react-router-dom
+import { Routes, Route } from 'react-router-dom';
+
 // reducer
 export default function App() {
     // Api Key
@@ -38,6 +41,7 @@ export default function App() {
     // sidebar
     const [isSide, setIsSide] = useState<boolean>(false);
 
+    // 테마 변경
     function changeTheme(propTheme: string) {
         if (propTheme === 'dark') document.querySelector('html')!.classList.add('dark');
         else document.querySelector('html')!.classList.remove('dark');
@@ -85,19 +89,27 @@ export default function App() {
                 <ApiInput apiKey={apiKey} onChangeApiKey={setApiKey} inputDisabled={inputDisabled} />
                 <Submit inputDisabled={inputDisabled} onClickSubmit={onSubmitClick} />
                 <Mode theme={theme} onClickMode={onClickMode} />
+                <Sidebar isSide={isSide} onToggleIsSide={() => setIsSide(false)} />
             </Header>
-            <Sidebar isSide={isSide} onToggleIsSide={() => setIsSide(false)} />
-            <Content>
-                <Notice onClickModal={() => setIsModal(true)} />
-                <Guide />
-                <Warning />
-                <Search
-                    apiKey={apiKey}
-                    inputDisabled={inputDisabled}
-                    setIsAlert={setIsAlert}
-                    setAlertMessage={setAlertMessage}
-                ></Search>
-            </Content>
+            <Routes>
+                <Route
+                    index
+                    element={
+                        <Content>
+                            <Notice onClickModal={() => setIsModal(true)} />
+                            <Guide />
+                            <Warning />
+                            <Search
+                                apiKey={apiKey}
+                                inputDisabled={inputDisabled}
+                                setIsAlert={setIsAlert}
+                                setAlertMessage={setAlertMessage}
+                            />
+                        </Content>
+                    }
+                />
+                <Route path="/guide" />
+            </Routes>
             <Footer />
             {isAlert ? <Alert alertMessage={alertMessage} onAlertClose={() => setIsAlert(false)} /> : null}
             <Modal isModal={isModal} onCloseModal={() => setIsModal(false)} />
