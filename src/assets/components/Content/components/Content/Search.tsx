@@ -1,9 +1,9 @@
-import Notification from '../../Common/Notification';
+import Notification from '../../../Common/Notification';
 
 import { useState, useReducer, useEffect } from 'react';
 
-import { searchNickNameReducer } from '../../../ts/reducer/reducer';
-import api from '../../../ts/api/api';
+import { searchNickNameReducer } from '../../../../ts/reducer/reducer';
+import api from '../../../../ts/api/api';
 
 interface SearchProps {
     apiKey: string;

@@ -1,4 +1,4 @@
-import ContentCard from '../../Common/ContentCard';
+import ContentCard from '../../../Common/Content/CardLayout';
 
 const Warning = () => {
     const imageType = 'Warning';

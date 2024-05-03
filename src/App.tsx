@@ -1,5 +1,5 @@
 // Component
-import Header from './assets/components/Header/Header';
+import HeaderLayout from './assets/components/Header/HeaderLayout';
 import MenuIcon from './assets/components/Header/components/MenuIcon';
 import Logo from './assets/components/Header/components/Logo';
 import ApiInput from './assets/components/Header/components/ApiInput';
@@ -8,16 +8,16 @@ import Mode from './assets/components/Header/components/Mode';
 
 import Sidebar from './assets/components/SideBar/SideBar';
 
-import Content from './assets/components/Content/Content';
-import Notice from './assets/components/Content/components/Notice';
-import Guide from './assets/components/Content/components/Guide';
-import Warning from './assets/components/Content/components/Warning';
-import Search from './assets/components/Content/components/Search';
+import ContentLayout from './assets/components/Content/ContentLayout';
+import Notice from './assets/components/Content/components/Content/Notice';
+import Guide from './assets/components/Content/components/Content/Guide';
+import Warning from './assets/components/Content/components/Content/Warning';
+import Search from './assets/components/Content/components/Content/Search';
+import Issuance from './assets/components/Content/components/Guide/Issuance';
 
-import Footer from './assets/components/Footer/Footer';
+import FooterLayout from './assets/components/Footer/FooterLayout';
 
 import Alert from './assets/components/Common/Alert';
-import Modal from './assets/components/Modal/Modal';
 
 // React
 import { useState, useEffect } from 'react';
@@ -33,7 +33,6 @@ export default function App() {
     // Common : Alert Message, Alert, Modal
     const [alertMessage, setAlertMessage] = useState<string>('');
     const [isAlert, setIsAlert] = useState<boolean>(false);
-    const [isModal, setIsModal] = useState<boolean>(false);
     // input Disabled
     const [inputDisabled, setInputDisabled] = useState<boolean>(false);
     // theme
@@ -83,20 +82,20 @@ export default function App() {
 
     return (
         <div className="container">
-            <Header>
+            <HeaderLayout>
                 <MenuIcon onToggleIsSide={() => setIsSide(true)} />
                 <Logo />
                 <ApiInput apiKey={apiKey} onChangeApiKey={setApiKey} inputDisabled={inputDisabled} />
                 <Submit inputDisabled={inputDisabled} onClickSubmit={onSubmitClick} />
                 <Mode theme={theme} onClickMode={onClickMode} />
                 <Sidebar isSide={isSide} onToggleIsSide={() => setIsSide(false)} />
-            </Header>
+            </HeaderLayout>
             <Routes>
                 <Route
                     index
                     element={
-                        <Content>
-                            <Notice onClickModal={() => setIsModal(true)} />
+                        <ContentLayout>
+                            <Notice />
                             <Guide />
                             <Warning />
                             <Search
@@ -105,14 +104,20 @@ export default function App() {
                                 setIsAlert={setIsAlert}
                                 setAlertMessage={setAlertMessage}
                             />
-                        </Content>
+                        </ContentLayout>
                     }
                 />
-                <Route path="/guide" />
+                <Route
+                    path="/guide"
+                    element={
+                        <ContentLayout>
+                            <Issuance />
+                        </ContentLayout>
+                    }
+                />
             </Routes>
-            <Footer />
+            <FooterLayout />
             {isAlert ? <Alert alertMessage={alertMessage} onAlertClose={() => setIsAlert(false)} /> : null}
-            <Modal isModal={isModal} onCloseModal={() => setIsModal(false)} />
         </div>
     );
 }
