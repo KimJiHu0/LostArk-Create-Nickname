@@ -1,4 +1,4 @@
-import ContentCard from '../../../Common/Content/CardLayout';
+import ContentCard from '../../../Common/Content/ContentCard';
 const Notice = () => {
     const imageType = 'Notice';
     const title = '공지사항';

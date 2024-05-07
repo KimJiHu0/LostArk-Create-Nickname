@@ -205,7 +205,7 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
                                 ? 'w-full bg-gray-500 dark:bg-slate-600 px-4 py-2 rounded-md text-white'
                                 : 'w-full bg-gray-500 dark:bg-slate-600 px-4 py-2 rounded-md text-white hover:bg-gray-700'
                         }
-                        // className="w-full bg-gray-500 dark:bg-slate-600 px-4 py-2 rounded-md text-white"
+                        // className="w-full bg-gray-500 darkK:bg-slate-600 px-4 py-2 rounded-md text-white"
                         onClick={onSearchButton}
                         disabled={isDisabled}
                     >
