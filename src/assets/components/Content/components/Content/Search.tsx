@@ -28,7 +28,6 @@ const Search = ({ setIsAlert, setAlertMessage }: SearchProps) => {
     const searchNickNames = useSelector(
         (state: { searchNickNameReducer: SearchNickName[] }) => state.searchNickNameReducer,
     );
-    console.log('searchNickNames : ', searchNickNames);
 
     // 검색중 Notification
     const [isNotification, setIsNotification] = useState<boolean>(false);
@@ -39,6 +38,7 @@ const Search = ({ setIsAlert, setAlertMessage }: SearchProps) => {
     useEffect(() => {
         if (searchNickNames.length === searchNickNames.filter((el) => el.searchComplete).length) {
             setIsDisabled(false);
+            setIsAlert(false);
         }
     }, [searchNickNames]);
 
