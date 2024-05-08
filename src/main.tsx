@@ -4,6 +4,9 @@ import App from './App.tsx';
 import './assets/css/index.css';
 
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
+import { store } from './assets/ts/store/store.ts';
 
 /*
   해당 파이은 ReactDOM.render를 수행
@@ -13,7 +16,9 @@ import { BrowserRouter } from 'react-router-dom';
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <BrowserRouter>
-            <App />
+            <Provider store={store}>
+                <App />
+            </Provider>
         </BrowserRouter>
     </React.StrictMode>,
 );
