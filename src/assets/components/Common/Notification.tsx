@@ -5,13 +5,13 @@ interface searchNickNameType {
     nickName: string;
 }
 interface NotificationProps {
-    srNicks: searchNickNameType[] | [];
+    searchNickNames: searchNickNameType[] | [];
     onCloseNotification: () => void;
 }
 
-const Notification = ({ srNicks, onCloseNotification }: NotificationProps) => {
-    const searchingNicks = srNicks.length;
-    const searchCompleteNicks = srNicks.filter((el) => el.searchComplete).length;
+const Notification = ({ searchNickNames, onCloseNotification }: NotificationProps) => {
+    const searchingNicks = searchNickNames.length;
+    const searchCompleteNicks = searchNickNames.filter((el) => el.searchComplete).length;
     const status = searchCompleteNicks === searchingNicks ? true : false;
 
     return (

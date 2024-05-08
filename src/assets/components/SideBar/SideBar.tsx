@@ -1,11 +1,11 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-interface SideBarType {
-    isSide: boolean;
-    onToggleIsSide: () => void;
-}
+import { sideBarChange } from '../../ts/reducer/sideBarReducer';
 
-const Sidebar = ({ isSide, onToggleIsSide }: SideBarType) => {
+const Sidebar = () => {
+    const dispatch = useDispatch();
+    const sideBarState = useSelector((state: { sideBarReducer: boolean }) => state.sideBarReducer);
     const menuList = [
         {
             title: '닉네임 검색',
@@ -19,18 +19,18 @@ const Sidebar = ({ isSide, onToggleIsSide }: SideBarType) => {
     return (
         <div
             className={`fixed inset-y-0 left-0 z-10 w-64 bg-gray-200 dark:bg-gray-800 transition duration-200 ease-in-out transform ${
-                isSide ? 'translate-x-0 shadow-r' : '-translate-x-full'
+                sideBarState ? 'translate-x-0 shadow-r' : '-translate-x-full'
             }`}
         >
             <div className="flex justify-between p-4">
-                <button className="dark:text-white" onClick={onToggleIsSide}>
+                <button className="dark:text-white" onClick={() => dispatch(sideBarChange(false))}>
                     X
                 </button>
             </div>
             <div className="flex flex-col p-4 gap-5">
                 {/* Sidebar content goes here */}
                 {menuList.map((menu, index) => (
-                    <p key={index} className="dark:text-white text-lg">
+                    <p key={index} className="dark:text-white text-lg" onClick={() => dispatch(sideBarChange(false))}>
                         <NavLink className="active:text-neutral-200" to={menu.path}>
                             {menu.title}
                         </NavLink>

@@ -6,11 +6,11 @@ interface GuideContentType {
         link?: string;
     };
 }
-interface GuideLayoutType {
-    guideList: [GuideContentType];
+interface GuideCardType {
+    guideList: GuideContentType[];
 }
-const GuideLayout = ({ guideList }: GuideLayoutType) => {
-    const sliceGuideList = (guideList: GuideLayoutType, size: number) => {
+const GuideCard = ({ guideList }: GuideCardType) => {
+    const sliceGuideList = (guideList: GuideCardType, size: number) => {
         const arr = [];
 
         for (let i = 0; i < guideList.length; i += size) {
@@ -61,4 +61,4 @@ const GuideLayout = ({ guideList }: GuideLayoutType) => {
     );
 };
 
-export default GuideLayout;
+export default GuideCard;
