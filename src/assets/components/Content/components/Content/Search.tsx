@@ -1,13 +1,12 @@
 import Notification from '../../../Common/Notification';
 
-import { useState, useReducer, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { searchNickNameReducer } from '../../../../ts/reducer/reducer';
+import { nicknameChange, nicknameSearch, nicknameReset } from '../../../../ts/reducer/searchNickNameReducer';
 import api from '../../../../ts/api/api';
 
 interface SearchProps {
-    apiKey: string;
-    inputDisabled: boolean;
     setIsAlert: (flag: boolean) => void;
     setAlertMessage: (message: string) => void;
 }
@@ -19,9 +18,18 @@ interface SearchNickName {
     nickName: string;
 }
 
-const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchProps) => {
-    // 검색할 닉네임 Reducer
-    const [searchNickNames, searchNickNamesDispatch] = useReducer(searchNickNameReducer, []);
+const Search = ({ setIsAlert, setAlertMessage }: SearchProps) => {
+    const dispatch = useDispatch();
+    // API KEY Redux
+    const apiKeyState = useSelector(
+        (state: { apikeyReducer: { apiKey: string; isDisabled: boolean } }) => state.apikeyReducer,
+    );
+    // Search NickName Redux
+    const searchNickNames = useSelector(
+        (state: { searchNickNameReducer: SearchNickName[] }) => state.searchNickNameReducer,
+    );
+    console.log('searchNickNames : ', searchNickNames);
+
     // 검색중 Notification
     const [isNotification, setIsNotification] = useState<boolean>(false);
     // textarea, search button disabled
@@ -81,16 +89,16 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
                 return false;
             }
             // 아닐 땐 계속 검색 진행
-            await api(apiKey, searchList[i].nickName)
+            await api(apiKeyState.apiKey, searchList[i].nickName)
                 .then((result) => {
-                    searchNickNamesDispatch({
-                        type: 'srNicks_search',
-                        nicks: {
+                    dispatch(
+                        nicknameSearch({
                             index: searchList[i].index,
                             using: !result.data ? true : false,
                             searchComplete: true,
-                        },
-                    });
+                            nickName: searchList[i].nickName,
+                        }),
+                    );
                 })
                 .catch((e) => {
                     // pass를 false로 변경하여 Loop 종료
@@ -129,10 +137,10 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
     // 버튼 클릭 시
     const onSearchButton = async () => {
         // API Key 혹은 닉네임을 검색하지 않았을 때 검색 중지
-        if (!apiKey) {
+        if (!apiKeyState.apiKey) {
             showAlert(true, 'API Key를 입력해주세요.');
             return false;
-        } else if (!inputDisabled) {
+        } else if (!apiKeyState.isDisabled) {
             showAlert(true, 'API Key를 적용 해주세요.');
             return false;
         } else if (searchNickNames.length === 0) {
@@ -141,7 +149,7 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
         } else {
             showAlert(false, '');
             // 검색할 닉네임을 변경하지 않고 검색을 바로누를 경우를 대비하여 searchComplete의 value를 false로 Reset
-            searchNickNamesDispatch({ type: 'srNicks_reset' });
+            dispatch(nicknameReset());
             // 검색
             searchNickName(searchNickNames);
         }
@@ -176,16 +184,13 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
                 : [];
 
         // searchNickName Set
-        searchNickNamesDispatch({
-            type: 'srNicks_change',
-            nickNameList: srAbleNicks,
-        });
+        dispatch(nicknameChange(srAbleNicks));
     };
 
     return (
         <main>
             {isNotification ? (
-                <Notification srNicks={searchNickNames} onCloseNotification={() => setIsNotification(false)} />
+                <Notification searchNickNames={searchNickNames} onCloseNotification={() => setIsNotification(false)} />
             ) : null}
             <div className="grid grid-cols-2">
                 <div className="flex flex-col gap-3 p-5">
@@ -193,6 +198,7 @@ const Search = ({ apiKey, inputDisabled, setIsAlert, setAlertMessage }: SearchPr
                         검색할 닉네임 : {searchNickNames.length}개
                     </label>
                     <textarea
+                        defaultValue={searchNickNames.map((el) => el.nickName).join(' ')}
                         id="textarea1"
                         className="flex w-full rounded-md border border-dashed border-black dark:border-white bg-background dark:bg-slate-700 dark:text-gray-300 px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[200px] h-[20rem] text-base resize-none"
                         placeholder="검색할 닉네임을 띄어쓰기로 구분하여 입력해주세요."

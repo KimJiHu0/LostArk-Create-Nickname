@@ -1,4 +1,4 @@
-import GuideLayout from '../../../Common/Guide/GuideCard';
+import GuideCard from '../../../Common/Guide/GuideCard';
 const Issuance = () => {
     const guideList = [
         {
@@ -28,6 +28,6 @@ const Issuance = () => {
             text: '생성한 CLIENT에서 상단 API KEY가 생성되었습니다. 이제 이 API KEY를 COPY하여 닉네임 검색 홈페이지 상단 API KEY 입력 칸에 붙여넣기 하면 됩니다.',
         },
     ];
-    return <GuideLayout guideList={guideList} />;
+    return <GuideCard guideList={guideList} />;
 };
 export default Issuance;
