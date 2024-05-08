@@ -1,8 +1,35 @@
-interface ModelProps {
-    theme: string;
-    onClickMode: () => void;
-}
-const Mode = ({ theme, onClickMode }: ModelProps) => {
+import { useState, useEffect } from 'react';
+
+const Mode = () => {
+    // theme
+    const [theme, setTheme] = useState<string>('');
+
+    // 테마 변경
+    function changeTheme(propTheme: string) {
+        if (propTheme === 'dark') document.querySelector('html')!.classList.add('dark');
+        else document.querySelector('html')!.classList.remove('dark');
+    }
+
+    // 테마 변경 시
+    const onClickMode = () => {
+        setTheme((prev) => {
+            const newTheme = prev === 'dark' ? 'light' : 'dark';
+            changeTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
+            return newTheme;
+        });
+    };
+
+    // mounted
+    useEffect(() => {
+        // 테마
+        const localsotrageTheme: string = localStorage.getItem('theme') || 'light';
+        setTheme((p) => {
+            changeTheme(localsotrageTheme);
+            return localsotrageTheme;
+        });
+    }, []);
+
     return (
         <div className="grid place-items-center">
             <button

@@ -1,10 +1,10 @@
-interface MenuIconType {
-    onToggleIsSide: () => void;
-}
+import { useDispatch } from 'react-redux';
+import { sideBarChange } from '../../../ts/reducer/sideBarReducer';
 
-const MenuIcon = ({ onToggleIsSide }: MenuIconType) => {
+const MenuIcon = () => {
+    const dispatch = useDispatch();
     return (
-        <button className="block text-gray-500 hover:opacity-30 ml-5" onClick={onToggleIsSide}>
+        <button className="block text-gray-500 hover:opacity-30 ml-5" onClick={() => dispatch(sideBarChange(true))}>
             <svg
                 className="w-6 h-6"
                 fill="none"
