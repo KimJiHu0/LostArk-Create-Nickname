@@ -1,20 +1,20 @@
 // Component
-import HeaderLayout from './assets/components/Header/HeaderLayout';
-import Sidebar from './assets/components/SideBar/SideBar';
+import HeaderLayout from '@components/Header/HeaderLayout';
+import Sidebar from '@components/SideBar/SideBar';
 
-import ContentLayout from './assets/components/Content/ContentLayout';
-import Notice from './assets/components/Content/components/Content/Notice';
-import Guide from './assets/components/Content/components/Content/Guide';
-import Warning from './assets/components/Content/components/Content/Warning';
-import Search from './assets/components/Content/components/Content/Search';
-import Issuance from './assets/components/Content/components/Guide/Issuance';
+import ContentLayout from '@components/Content/ContentLayout';
+import Notice from '@components/Content/components/Content/Notice';
+import Guide from '@components/Content/components/Content/Guide';
+import Warning from '@components/Content/components/Content/Warning';
+import Search from '@components/Content/components/Content/Search';
+import Issuance from '@components/Content/components/Guide/Issuance';
 
-import FooterLayout from './assets/components/Footer/FooterLayout';
+import FooterLayout from '@components/Footer/FooterLayout';
 
-import Alert from './assets/components/Common/Alert';
+import Alert from '@components/Common/Alert';
 
 // React
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 
 // react-router-dom
