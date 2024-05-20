@@ -15,4 +15,10 @@ export default defineConfig({
         },
     },
     plugins: [react()],
+    resolve: {
+        alias: [
+            { find: '@components', replacement: '/src/assets/components' },
+            { find: '@', replacement: '/src' },
+        ],
+    },
 });
