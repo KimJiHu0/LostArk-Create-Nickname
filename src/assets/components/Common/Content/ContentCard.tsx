@@ -5,7 +5,7 @@ interface ContentCardProps {
     list?: Array<string> | [];
 }
 
-const ContentCard = ({ imageType, title, listType, list }: ContentCardProps) => {
+const ContentCard = ({ imageType, title, listType, list = [] }: ContentCardProps) => {
     return (
         <article>
             <div className="flex flex-col mx-5 my-5 rounded-xl bg-gray-100 dark:bg-slate-900 dark:text-gray-300">

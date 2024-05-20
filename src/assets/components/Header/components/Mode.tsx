@@ -24,7 +24,7 @@ const Mode = () => {
     useEffect(() => {
         // 테마
         const localsotrageTheme: string = localStorage.getItem('theme') || 'light';
-        setTheme((p) => {
+        setTheme(() => {
             changeTheme(localsotrageTheme);
             return localsotrageTheme;
         });

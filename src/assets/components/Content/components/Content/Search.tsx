@@ -68,9 +68,9 @@ const Search = ({ setIsAlert, setAlertMessage }: SearchProps) => {
     };
 
     const searchApi = async (searchList: SearchNickName[]) => {
-        let pass = true;
-        let status: number;
-        let statusText: string;
+        let pass: boolean = true;
+        let status: number = 0;
+        let statusText: string = '';
 
         // 우측 상단 Notification Show
         setIsNotification(true);
@@ -168,14 +168,14 @@ const Search = ({ setIsAlert, setAlertMessage }: SearchProps) => {
     };
 
     // 검색 닉네임 변경 시
-    const onChangeSearchNicks = (e) => {
+    const onChangeSearchNicks = (nickNames: string) => {
         // 우측 상단 Notification hide
         setIsNotification(false);
 
         // // 중복체크 후 검색 닉네임 List
         const srAbleNicks =
-            e.target.value !== ''
-                ? duplicateCheck(e.target.value).map((el: string, index: number) => ({
+            nickNames !== ''
+                ? duplicateCheck(nickNames).map((el: string, index: number) => ({
                       index: index,
                       using: false,
                       searchComplete: false,
@@ -202,7 +202,9 @@ const Search = ({ setIsAlert, setAlertMessage }: SearchProps) => {
                         id="textarea1"
                         className="flex w-full rounded-md border border-dashed border-black dark:border-white bg-background dark:bg-slate-700 dark:text-gray-300 px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-h-[200px] h-[20rem] text-base resize-none"
                         placeholder="검색할 닉네임을 띄어쓰기로 구분하여 입력해주세요."
-                        onChange={onChangeSearchNicks}
+                        onChange={(e) => {
+                            onChangeSearchNicks(e.target.value);
+                        }}
                         disabled={isDisabled}
                     />
                     <button

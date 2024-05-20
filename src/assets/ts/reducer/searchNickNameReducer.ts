@@ -7,8 +7,8 @@ interface SearchNickNameMap {
 
 interface ActionType {
     type: string;
-    nickNameList: SearchNickNameMap[] | [];
-    completeNick: SearchNickNameMap | {};
+    nickNameList: SearchNickNameMap[];
+    completeNick: SearchNickNameMap;
 }
 
 // 검색할 닉네임에 닉네임 입력 시

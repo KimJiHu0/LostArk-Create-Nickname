@@ -1,16 +1,15 @@
 interface GuideContentType {
-    content: {
-        seq: number;
-        image: string;
-        text: string;
-        link?: string;
-    };
+    seq: number;
+    image: string;
+    text: string;
+    link?: string;
 }
 interface GuideCardType {
     guideList: GuideContentType[];
 }
-const GuideCard = ({ guideList }: GuideCardType) => {
-    const sliceGuideList = (guideList: GuideCardType, size: number) => {
+
+const GuideCard = ({ guideList = [] }: GuideCardType) => {
+    const sliceGuideList = (guideList: GuideContentType[], size: number) => {
         const arr = [];
 
         for (let i = 0; i < guideList.length; i += size) {
