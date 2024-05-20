@@ -12,7 +12,7 @@ const Logo = () => {
                 // href="#"
                 onClick={onLogoClick}
             >
-                LCN
+                LOANICK
             </a>
         </div>
     );
