@@ -126,7 +126,8 @@ const Search = ({ setIsAlert, setAlertMessage }: SearchProps) => {
 
     // 닉네임 검색 함수
     const searchNickName = async (searchList: SearchNickName[]) => {
-        await searchApi(searchList);
+        const filterNicknames = searchList.filter((el) => 2 <= el.nickName.length && el.nickName.length <= 12);
+        await searchApi(filterNicknames);
     };
 
     const showAlert = (isShow: boolean, message: string) => {
@@ -167,6 +168,11 @@ const Search = ({ setIsAlert, setAlertMessage }: SearchProps) => {
         ];
     };
 
+    // 글자 길이 체크 함수 ( 2 - 12 글자 닉네임만 담음 )
+    const nicknameRangeCheck = (searchNicknames: string[]) => {
+        return searchNicknames.filter((el) => 2 <= el.length && el.length <= 12);
+    };
+
     // 검색 닉네임 변경 시
     const onChangeSearchNicks = (nickNames: string) => {
         // 우측 상단 Notification hide
@@ -175,7 +181,7 @@ const Search = ({ setIsAlert, setAlertMessage }: SearchProps) => {
         // // 중복체크 후 검색 닉네임 List
         const srAbleNicks =
             nickNames !== ''
-                ? duplicateCheck(nickNames).map((el: string, index: number) => ({
+                ? nicknameRangeCheck(duplicateCheck(nickNames)).map((el: string, index: number) => ({
                       index: index,
                       using: false,
                       searchComplete: false,
