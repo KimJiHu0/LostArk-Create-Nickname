@@ -1,30 +1,9 @@
-# React + TypeScript + Vite
+# 로아닉
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 로스트아크 닉네임을 인게임에서 생성하며 확인하는 것이 아닌 웹 페이지에서 Stove Open API를 활용하여 API KEY를 통해 검색할 수 있도록 편의성을 제공하는 프로젝트를 개발했습니다.
 
-Currently, two official plugins are available:
+https://www.notion.so/kimjihu-history/261601093e1644da86a7d76a649e6909
+> 로아닉 웹 페이지 제작에 있어 정리한 블로그입니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+https://loanick.com
+> 실제 웹 개발이 완료된 화면입니다.
